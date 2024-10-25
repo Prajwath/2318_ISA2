@@ -1,39 +1,35 @@
-// Jenkinsfile
 pipeline {
     agent any
     stages {
         stage('Clone Repository') {
             steps {
-                // Clone the GitHub repo
-                git 'https://github.com/Prajwath/2318_ISA2.git'
+                // Clone the GitHub repository
+                git 'https://github.com/<your_username>/2318.git'
             }
         }
         stage('Build Docker Image') {
             steps {
                 // Build Docker image
                 script {
-                    docker.build("2318_image")
+                    docker.build('2318')
                 }
             }
         }
         stage('Remove Existing Container') {
             steps {
+                // Remove any existing container with the same name
                 script {
-                    sh "docker rm -f 2318 || true"
+                    sh 'docker rm -f 2318 || true'
                 }
             }
         }
-        stage('Run New Container') {
+        stage('Run Docker Container') {
             steps {
+                // Run a new container from the Docker image
                 script {
-                    // Run the Docker container
-                    sh "docker run -d --name 2318 2318_image"
+                    docker.image('2318').run('--name 2318 -p 5000:5000')
                 }
             }
         }
-    }
-    triggers {
-        // Poll the GitHub repository for changes every 10 minutes
-        pollSCM('H/10 * * * *')
     }
 }
