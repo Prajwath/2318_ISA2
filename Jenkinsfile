@@ -5,8 +5,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build the Docker image
-                    sh 'docker build -t 2318-flask-app .'
+                    // Build the Docker image using Windows batch commands
+                    bat 'docker build -t 2318-flask-app .'
                 }
             }
         }
@@ -15,10 +15,10 @@ pipeline {
             steps {
                 script {
                     // Stop and remove existing container if it exists
-                    sh 'docker rm -f 2318 || true'
+                    bat 'docker rm -f 2318 || exit 0'
                     
                     // Run new container
-                    sh 'docker run -d -p 5000:5000 --name 2318 2318-flask-app'
+                    bat 'docker run -d -p 5000:5000 --name 2318 2318-flask-app'
                 }
             }
         }
