@@ -1,33 +1,34 @@
+# Jenkinsfile
 pipeline {
     agent any
+    
     stages {
         stage('Clone Repository') {
             steps {
-                // Clone the GitHub repository
-                git 'https://github.com/Prajwath/2318_ISA2.git'
+                // Clean workspace before cloning
+                cleanWs()
+                // Clone the repository
+                git branch: 'main', url: 'https://github.com/YOUR_USERNAME/RollNo_ISA2.git'
             }
         }
+        
         stage('Build Docker Image') {
             steps {
-                // Build Docker image
                 script {
-                    docker.build('2318')
+                    // Build the Docker image
+                    sh 'docker build -t rollno-flask-app .'
                 }
             }
         }
-        stage('Remove Existing Container') {
+        
+        stage('Deploy Container') {
             steps {
-                // Remove any existing container with the same name
                 script {
-                    sh 'docker rm -f 2318 || true'
-                }
-            }
-        }
-        stage('Run Docker Container') {
-            steps {
-                // Run a new container from the Docker image
-                script {
-                    docker.image('2318').run('--name 2318 -p 5000:5000')
+                    // Stop and remove existing container if it exists
+                    sh 'docker rm -f XXXXX || true'
+                    
+                    // Run new container
+                    sh 'docker run -d -p 5000:5000 --name XXXXX rollno-flask-app'
                 }
             }
         }
