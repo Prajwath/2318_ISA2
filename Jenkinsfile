@@ -4,31 +4,30 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                // Clone the GitHub repository
-                git 'https://github.com/yourusername/<RollNo>_ISA2'
+                // Clone the GitHub repo
+                git 'https://github.com/Prajwath/2318_ISA2.git'
             }
         }
         stage('Build Docker Image') {
             steps {
                 // Build Docker image
                 script {
-                    docker.build("<RollNo>_image")
+                    docker.build("2318_image")
                 }
             }
         }
         stage('Remove Existing Container') {
             steps {
                 script {
-                    // Stop and remove existing container if it exists
-                    sh "docker rm -f <RollNo> || true"
+                    sh "docker rm -f 2318 || true"
                 }
             }
         }
         stage('Run New Container') {
             steps {
                 script {
-                    // Run the Docker container in daemon mode
-                    sh "docker run -d --name <RollNo> <RollNo>_image"
+                    // Run the Docker container
+                    sh "docker run -d --name 2318 2318_image"
                 }
             }
         }
