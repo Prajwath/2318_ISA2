@@ -4,7 +4,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 // Clone the GitHub repository
-                git 'https://github.com/<your_username>/2318.git'
+                git 'https://github.com/Prajwath/2318_ISA2.git'
             }
         }
         stage('Build Docker Image') {
