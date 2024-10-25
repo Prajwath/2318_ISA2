@@ -1,6 +1,16 @@
 pipeline {
     agent any
-
+    
+    stages {
+        stage('Clone Repository') {
+            steps {
+                // Clean workspace before cloning
+                cleanWs()
+                // Clone the repository with your correct username
+                git branch: 'main', url: 'https://github.com/Prajwath/2318_ISA2.git'
+            }
+        }
+        
         stage('Build Docker Image') {
             steps {
                 script {
